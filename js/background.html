@@ -1,0 +1,23 @@
+<html>
+<head>
+    <script type="text/javascript" src="prototype-1.6.1.js"></script>
+    <script type="text/javascript" src="shortcut_store.js"></script>
+
+    <script type="text/javascript">
+        console.log("Hello world");
+
+        chrome.extension.onRequest.addListener(
+                function(request, sender, sendResponse) {
+
+                    if (request.action == "get-config") {
+                        var store = new ShortcutStore();
+                        var options = store.load();
+                        sendResponse({'focusShortcut': store.convertOptionsToString(options)});
+                    }
+                    else {
+                        sendResponse({}); // snub them.
+                    }
+                });
+    </script>
+</head>
+</html>

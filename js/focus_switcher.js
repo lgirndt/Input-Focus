@@ -23,6 +23,7 @@ var FocusSwitcher = Class.create({
     bindShortcut : function() {
         // Event.observe(document,"keydown",this.handleKeyEvent.bind(this))
         shortcut.add(this.shortcut,this.moveFocus.bind(this));
+        console.log('Added shortcut as ' + this.shortcut);
     },
 
     moveFocus : function(){
@@ -54,4 +55,3 @@ var FocusSwitcher = Class.create({
     }
 });
 
-var focusSwitcher = new FocusSwitcher();

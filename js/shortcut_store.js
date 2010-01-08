@@ -13,10 +13,14 @@ var ShortcutStore = Class.create({
         localStorage[id] = json;     
     },
 
-    restore : function(){
+    load:function () {
         var o = this.loadShortcut('focusShortcut');
         o = o || this.getDefaultShortcut();
+        return o;
+    },
 
+    restore : function(){
+        var o = this.load();
         if(o){
             this.applyOptions('focus',o);
         }
