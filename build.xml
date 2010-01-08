@@ -1,0 +1,9 @@
+<project name="InputFocus" basedir=".">
+
+    <property name="dir.js" value="js"/>
+    <property name="file.target" value="InputFocus.zip" />
+
+    <target name="package">
+        <zip destfile="${file.target}" basedir="${dir.js}" />                    
+    </target>
+</project>
