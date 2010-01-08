@@ -38,6 +38,7 @@ var ShortcutStore = Class.create({
     convertOptionsToString : function(options){
 
         var str = options.key;
+        str = str.toUpperCase();
         if(options.hasShift == true){
             str += "+Shift";
         }

@@ -74,18 +74,31 @@
             <td><input type="checkbox" id="focus_hasCtrl"></td>
             <td><input type="checkbox" id="focus_hasAlt"></td>
             <td><input type="checkbox" id="focus_hasMeta"></td>
-            <td>TODO</td>
+            <td>
+                Sets the focus on the first text field of the current page. Consecutive
+                pressing circles the focus through all text fields.
+            </td>
             <td><span id="shortcutInfo"></span></td>
         </tr>
     </table>
 
     <div>
         <a id="saveButton" href="#">Save</a>
+        <a id="revertButton" href="#">Revert</a>
     </div>
 </fieldset>
 
 
 <script type="text/javascript">
+
+    function flash(msg) {
+        $('flash').innerHTML = msg;
+        $('flash').style.display = 'inline';
+        setTimeout(function() {
+            $('flash').style.display = 'none';
+        }, 2750)
+    }
+
     document.observe("dom:loaded", function() {
         var shortcutStore = new ShortcutStore();
 
@@ -97,13 +110,14 @@
         updateInfo();
 
         $('saveButton').observe("click", function() {
-            console.log("saving...");
             shortcutStore.store();
-            $('flash').innerHTML = 'Changes have been saved.';
-            $('flash').style.display = 'inline';
-            setTimeout(function(){
-                $('flash').style.display = 'none';    
-            },2750)
+            flash('Changes have been saved.');
+        });
+
+        $('revertButton').observe("click",function(){
+            shortcutStore.restore();
+            flash('Changes have been reverted.');
+            updateInfo();
         });
     });
 </script>
