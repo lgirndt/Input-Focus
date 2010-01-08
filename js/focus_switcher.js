@@ -3,26 +3,26 @@
  */
 var FocusSwitcher = Class.create({
 
-    initialize : function() {
-        this.isShortcut = clientInformation.platform == "MacIntel" ? this.isMacShortcut : this.isWinLinuxShortcut;
-        this.bindShortcut();
+    initialize : function(options) {
+        options = options || {};
+        this.shortcut = options.shortcut || this.determineDefaultShortcut();
         this.lastFocused = -1;
+
+        this.bindShortcut();        
+    },
+
+    determineDefaultShortcut : function() {
+      if(clientInformation.platform == "MacIntel"){
+          return "Meta+Alt+L";
+      }
+      else {
+          return "Ctrl+Alt+L";
+      }
     },
 
     bindShortcut : function() {
-        Event.observe(document,"keydown",this.handleKeyEvent.bind(this))
-    },
-
-    /**
-     * Examines the key event and calls our handling method, if we are interested in the
-     * particular key event.
-     * @param evt
-     */
-    handleKeyEvent : function(evt){
-        if(this.isShortcut(evt)){
-            this.moveFocus();
-            Event.stop(evt);                  
-        }
+        // Event.observe(document,"keydown",this.handleKeyEvent.bind(this))
+        shortcut.add(this.shortcut,this.moveFocus.bind(this));
     },
 
     moveFocus : function(){
@@ -51,18 +51,6 @@ var FocusSwitcher = Class.create({
             }
         }
         return null;
-    },
-
-    /**
-     * Determines if we are interested in the shortcut
-     * @param evt
-     */
-    isWinLinuxShortcut : function(evt){
-        return evt.keyCode == 76 && evt.ctrlKey && evt.altKey;
-    },
-
-    isMacShortcut : function(evt){
-        return evt.keyCode == 76 && evt.metaKey && evt.altKey;
     }
 });
 

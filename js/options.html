@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Input Focus Options</title>
+
+    <script type="text/javascript" src="prototype-1.6.1.js"></script>
+    <script type="text/javascript" src="shortcut_store.js"></script>
+
+    <style type="text/css">
+        body, html {
+            font-family: Trebuchet MS, Arial, sans-serif;
+            font-size: 10pt;
+        }
+
+        fieldset {
+            background-color: #F4F6FC;
+            border-color: #B5C7DE;
+            border-width: 1px;
+            border-style: solid;
+            -webkit-border-radius: 5px;
+        }
+
+        th, td {
+            background-color: #EBEFF9;
+        }
+
+        #shortcutInfo {
+            color:#a0a0a0;
+            font-family:monospace;
+        }
+
+
+        .flash_container {
+            text-align:center;
+            height:30px;
+        }
+
+        #flash {
+            display:none;
+            background-color:orange;
+            font-weight:bold;
+            color:white;            
+            padding:4px;
+            -webkit-border-radius:5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Input Focus Options</h1>
+
+<div class="flash_container">
+    <span id='flash'>Foobar</span>
+</div>
+
+<fieldset title="Shortcuts">
+    <h2>Shortcuts</h2>
+    <table>
+        <tr>
+            <th>Action</th>
+            <th>Key</th>
+            <th>Shift</th>
+            <th>Ctrl</th>
+            <th>Alt</th>
+            <th>Meta</th>
+            <th>Description</th>
+            <th>Shortcut</th>
+        </tr>
+        <tr id="focusRow">
+            <td><label>Set Focus</label></td>
+            <td><input type="text" id="focus_key" size="3"></td>
+            <td><input type="checkbox" id="focus_hasShift"></td>
+            <td><input type="checkbox" id="focus_hasCtrl"></td>
+            <td><input type="checkbox" id="focus_hasAlt"></td>
+            <td><input type="checkbox" id="focus_hasMeta"></td>
+            <td>TODO</td>
+            <td><span id="shortcutInfo"></span></td>
+        </tr>
+    </table>
+
+    <div>
+        <a id="saveButton" href="#">Save</a>
+    </div>
+</fieldset>
+
+
+<script type="text/javascript">
+    document.observe("dom:loaded", function() {
+        var shortcutStore = new ShortcutStore();
+
+        var focusRow = $('focusRow');
+        var updateInfo = function(){ shortcutStore.updateShortcutInfo('focus','shortcutInfo') };
+        Event.observe(focusRow, "change", updateInfo.bind(shortcutStore));
+
+        shortcutStore.restore();
+        updateInfo();
+
+        $('saveButton').observe("click", function() {
+            console.log("saving...");
+            shortcutStore.store();
+            $('flash').innerHTML = 'Changes have been saved.';
+            $('flash').style.display = 'inline';
+            setTimeout(function(){
+                $('flash').style.display = 'none';    
+            },2750)
+        });
+    });
+</script>
+
+</body>
+</html>

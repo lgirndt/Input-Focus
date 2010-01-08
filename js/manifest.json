@@ -1,11 +1,16 @@
 {
   "name": "Input Focus",
-  "version": "0.2",
+  "version": "0.3",
   "description": "Adds a shortcut to set the focus on one of the pages input textfields.",
+  "options_page":"options.html",
   "content_scripts": [
     {
       "matches": ["http://*/*"],
-      "js": ["prototype-1.6.1.js", "focus_switcher.js"]
+      "js": [
+            "prototype-1.6.1.js",
+            "shortcut.js",
+            "focus_switcher.js"
+      ]
     }
   ]
 }
